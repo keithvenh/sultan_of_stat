@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  year: 1
+  team_code: MyString
+  franchise_code: MyString
+  w: 1
+  l: 1
+  name: MyString
+  park: MyString
+  bpf: MyString
+  ppf: MyString
+
+two:
+  year: 1
+  team_code: MyString
+  franchise_code: MyString
+  w: 1
+  l: 1
+  name: MyString
+  park: MyString
+  bpf: MyString
+  ppf: MyString
