@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_222459) do
+ActiveRecord::Schema.define(version: 2019_02_13_221805) do
 
   create_table "batting_records", force: :cascade do |t|
     t.integer "player_id"
     t.integer "year"
     t.integer "stint"
-    t.string "team_code"
+    t.integer "team_id"
     t.integer "games"
     t.integer "ab"
     t.integer "r"
@@ -37,13 +37,14 @@ ActiveRecord::Schema.define(version: 2019_02_13_222459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_batting_records_on_player_id"
+    t.index ["team_id"], name: "index_batting_records_on_team_id"
   end
 
   create_table "fielding_records", force: :cascade do |t|
     t.integer "player_id"
     t.integer "year"
     t.string "stint"
-    t.string "team_code"
+    t.integer "team_id"
     t.string "pos"
     t.integer "games"
     t.integer "gs"
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_222459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_fielding_records_on_player_id"
+    t.index ["team_id"], name: "index_fielding_records_on_team_id"
   end
 
   create_table "franchises", force: :cascade do |t|
@@ -71,23 +73,11 @@ ActiveRecord::Schema.define(version: 2019_02_13_222459) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "outfield_positions", force: :cascade do |t|
-    t.integer "player_id"
-    t.string "year"
-    t.string "stint"
-    t.integer "lf"
-    t.integer "cf"
-    t.integer "rf"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["player_id"], name: "index_outfield_positions_on_player_id"
-  end
-
   create_table "pitching_records", force: :cascade do |t|
     t.integer "player_id"
     t.integer "year"
     t.integer "stint"
-    t.string "team_code"
+    t.integer "team_id"
     t.integer "w"
     t.integer "l"
     t.integer "games"
@@ -116,6 +106,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_222459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_pitching_records_on_player_id"
+    t.index ["team_id"], name: "index_pitching_records_on_team_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -131,7 +122,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_222459) do
   create_table "teams", force: :cascade do |t|
     t.integer "year"
     t.string "team_code"
-    t.string "franchise_code"
+    t.integer "franchise_id"
     t.integer "w"
     t.integer "l"
     t.string "name"
@@ -140,6 +131,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_222459) do
     t.integer "ppf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["franchise_id"], name: "index_teams_on_franchise_id"
   end
 
 end

@@ -1,0 +1,24 @@
+<h1>Sultan of Stat</h1>
+<p>Franchises</p>
+
+<h4>Active Franchises</h4>
+  <% @franchises.where(active: true).each do |fran| %>
+
+    <div class="team"><%= link_to fran.franchise_name, franchise_path(fran) , class: "team-link" %></div>
+  <% end %>
+
+<style>
+  .team {
+    width: 33%;
+    text-align: center;
+    display: inline-block
+  }
+  .team-link {
+    color: #a4a4ff;
+    text-decoration: none;
+  }
+  .team-link:hover {
+    color: #ffa4a4;
+    text-decoration: none;
+  }
+</style>

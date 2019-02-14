@@ -4,7 +4,7 @@ class CreateFieldingRecords < ActiveRecord::Migration[5.2]
       t.references :player
       t.integer :year
       t.string :stint
-      t.string :team_code
+      t.references :team
       t.string :pos
       t.integer :games
       t.integer :gs

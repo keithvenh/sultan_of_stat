@@ -3,6 +3,8 @@ require 'csv'
 file = "#{Rails.root}/lib/assets/seeds/"
 
 CSV.foreach("#{file}baseballdatabank/core/People.csv", headers: true) do |row|
+  date = row['finalGame']
+  if row['finalGame'] == nil || ['2016', '2017', '2018'].include?(date[0..3])
     Player.create(
       player_code: row['playerID'],
       first_name: row['nameFirst'],
@@ -10,6 +12,7 @@ CSV.foreach("#{file}baseballdatabank/core/People.csv", headers: true) do |row|
       bats: row['bats'],
       throws: row['throws']
     )
+  end
 end
 
 CSV.foreach("#{file}baseballdatabank/core/TeamsFranchises.csv", headers: true) do |row|
@@ -24,10 +27,11 @@ CSV.foreach("#{file}baseballdatabank/core/TeamsFranchises.csv", headers: true) d
 end
 
 CSV.foreach("#{file}baseballdatabank/core/Teams.csv", headers: true) do |row|
+  franchise = Franchise.find_by(franchise_code: row['franchID'])
   Team.create(
     year: row['yearID'],
     team_code: row['teamID'],
-    franchise_code: row['franchID'],
+    franchise: franchise,
     w: row['W'],
     l: row['L'],
     name: row['name'],
@@ -40,11 +44,12 @@ end
 CSV.foreach("#{file}baseballdatabank/core/Batting.csv", headers: true) do |row|
   if row['yearID'] == '2016'
     player = Player.find_by(player_code: row['playerID'])
+    team = Team.find_by(team_code: row['teamID'], year: 2016)
     BattingRecord.create(
       player: player,
       year: row['yearID'],
       stint: row['stint'],
-      team_code: row['teamID'],
+      team: team,
       games: row['G'],
       ab: row['AB'],
       r: row['R'],
@@ -69,11 +74,12 @@ end
 CSV.foreach("#{file}baseballdatabank/core/Pitching.csv", headers: true) do |row|
   if row['yearID'] == '2016'
     player = Player.find_by(player_code: row['playerID'])
+    team = Team.find_by(team_code: row['teamID'], year: 2016)
     PitchingRecord.create(
       player: player,
       year: row['yearID'],
       stint: row['stint'],
-      team_code: row['teamID'],
+      team: team,
       w: row['W'],
       l: row['L'],
       games: row['G'],
@@ -106,11 +112,12 @@ end
 CSV.foreach("#{file}baseballdatabank/core/Fielding.csv", headers: true) do |row|
   if row['yearID'] == '2016'
     player = Player.find_by(player_code: row['playerID'])
+    team = Team.find_by(team_code: row['teamID'], year: 2016)
     FieldingRecord.create(
       player: player,
       year: row['yearID'],
       stint: row['stint'],
-      team_code: row['teamID'],
+      team: team,
       pos: row['POS'],
       games: row['G'],
       gs: row['GS'],
@@ -124,20 +131,6 @@ CSV.foreach("#{file}baseballdatabank/core/Fielding.csv", headers: true) do |row|
       sb: row['SB'],
       cs: row['CS'],
       zr: row['ZR']
-    )
-  end
-end
-
-CSV.foreach("#{file}baseballdatabank/core/FieldingOF.csv", headers: true) do |row|
-  if row['yearID'] == '2016'
-    player = Player.find_by(player_code: row['playerID'])
-    OutfieldPosition.create(
-      player: player,
-      year: row['yearID'],
-      stint: row['stint'],
-      lf: row['Glf'],
-      cf: row['Gcf'],
-      rf: row['Grf']
     )
   end
 end

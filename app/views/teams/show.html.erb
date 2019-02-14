@@ -1,0 +1,8 @@
+<h1>Sultan of Stat</h1>
+<p><%= "#{@team.name} (#{@team.w}-#{@team.l})" %></p>
+
+<ul>
+  <% @team.batting_records.each do |bat| %>
+    <li><%= link_to "#{bat.player.first_name} #{bat.player.last_name}", player_path(bat.player) %></li>
+  <% end %>
+</ul>

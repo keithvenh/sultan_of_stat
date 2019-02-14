@@ -1,0 +1,11 @@
+<h1>Sultan of Stat</h1>
+<p><%= @franchise.franchise_name %></p>
+
+<h4>Teams Under Franchise</h4>
+<ul>
+  <% @franchise.teams.each do |team| %>
+    <% if team.batting_records.any? %>
+      <li><%= link_to "#{team.year} #{team.name}", team_path(team) %></li>
+    <% end %>
+  <% end %>
+</ul>
